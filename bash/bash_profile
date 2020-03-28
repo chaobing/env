@@ -1,0 +1,25 @@
+export CLICOLOR=1
+
+function git_branch {
+  branch='`git branch 2>/dev/null | grep "*" | sed -e "s/* //"`'
+  if [ "${branch}" != "" ];then
+      if [ "${branch}" = "(no branch)" ];then
+          branch="(`git rev-parse --short HEAD`...)"
+      fi
+      echo "$branch"
+  fi
+}
+function git_status {
+  fresh='`git status 2>/dev/null | wc -l | sed -e "s/[02]//" | sed -e "s/[^2]/+/g"`'
+  echo "$fresh"
+}
+#PS1="\[\e[37;40m\][\[\033[01;34m\]\u\[\e[37;40m\]@$(git_branch)\[\033[01;33m\]$(git_status)\[\e[35;40m\]\W\[\033[00m\]\[\e[0m\]]\\$ "
+PS1="\[\e[37;40m\][\[\033[01;34m\]\u\[\e[37;40m\]@$(git_branch)\[\033[01;33m\]+\W\[\033[00m\]\[\e[0m\]]\\$ "
+
+
+alias ll='ls -lh'
+
+export PATH="/usr/local/opt/ruby/bin:$PATH"
+export PATH="/usr/local/lib/gcc/x86_64-apple-darwin14.5.0/6.4.0:$PATH"
+export LC_ALL=en_US.UTF-8
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles

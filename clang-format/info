@@ -1,0 +1,6 @@
+rm -rf ./clang-format/ && mkdir -p ./clang-format
+curl 'http://releases.llvm.org/8.0.0/clang+llvm-8.0.0-x86_64-apple-darwin.tar.xz' -o './clang-format/clang-format.tar.xz'
+tar xvfJ clang-format/clang-format.tar.xz -C ./clang-format
+rm -f /usr/local/bin/clang-format
+sudo mv $(pwd)/$(find clang-format | grep bin/clang-format$) /usr/local/bin/clang-format
+clang-format --help
