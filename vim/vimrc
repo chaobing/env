@@ -71,23 +71,6 @@ set fillchars=vert:/
 set fillchars=stl:/
 set fillchars=stlnc:/
 
-" vundle 环境设置
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-"vundle管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'tomasr/molokai'
-Plugin 'vim-scripts/phd'
-Plugin 'Lokaltog/vim-powerline'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'Raimondi/delimitMate'
-Plugin 'Valloric/YouCompleteMe'
-" 插件列表结束
-call vundle#end()
-filetype plugin indent on
-
 " 配色方案
 set background=dark
 colorscheme torte
@@ -111,7 +94,7 @@ syntax keyword cppSTLtype initializer_list
 
 " 基于缩进或语法进行代码折叠
 "set foldmethod=indent
-set foldmethod=syntax
+"set foldmethod=syntax
 " 启动 vim 时关闭折叠代码
 set nofoldenable
 
@@ -133,6 +116,7 @@ set bg=dark
 set cursorline
 set cursorcolumn
 
+" clang-format------------------------------------------------------
 if has('python')
   map <C-F> :pyf ~/.vim/clang-format.py<cr>
   imap <C-F> <c-o>:pyf ~/.vim/clang-format.py<cr>
@@ -143,10 +127,38 @@ endif
 
 function! Formatonsave()
   let l:formatdiff = 1
-  if has('python')
-    pyf ~/.vim/clang-format.py
-  elseif has('python3')
     py3f ~/.vim/clang-format.py
-  endif
 endfunction
 autocmd BufWritePre *.h,*.hpp,*.cc,*.cpp,*.imp call Formatonsave() 
+
+" NERDTree------------------------------------------------------
+let NERDTreeWinPos='left'
+let NERDTreeWinSize=30
+map <C-T> :NERDTreeToggle<CR>
+
+" Taglist------------------------------------------------------
+let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
+let Tlist_Show_One_File=1
+let Tlist_WinWidth=30
+let Tlist_Exit_OnlyWindow=1
+let Tlist_Use_Right_Window=1
+map <C-L> :TlistToggle<CR>
+
+" vundle 环境设置
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+"vundle管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'tomasr/molokai'
+Plugin 'vim-scripts/phd'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'Raimondi/delimitMate'
+Plugin 'scrooloose/nerdtree'
+Plugin 'taglist.vim'
+Plugin 'Valloric/YouCompleteMe'
+" 插件列表结束
+call vundle#end()
+filetype plugin indent on
